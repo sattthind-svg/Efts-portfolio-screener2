@@ -79,7 +79,7 @@ export default function App() {
   // Day/Night Theme Toggle
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const saved = localStorage.getItem('etf-dark-mode');
-    return saved === 'true';
+    return saved !== null ? saved === 'true' : true;
   });
 
   // Search & Filters
@@ -1102,7 +1102,6 @@ export default function App() {
         <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-2xs space-y-5 overflow-hidden">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 max-w-full overflow-hidden">
             
-            {/* View Switch Tabs */}
             <div className="flex flex-wrap bg-slate-50 border border-slate-200/60 p-2 rounded-2xl w-full lg:w-fit gap-2 max-w-full min-w-0 shadow-3xs">
               {[
                 {
@@ -1110,99 +1109,99 @@ export default function App() {
                   label: 'ETF Screener',
                   icon: Sliders,
                   active: 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-600/20 scale-[1.03] ring-1 ring-indigo-500/10',
-                  inactive: 'bg-indigo-50/70 border border-indigo-200/50 text-indigo-700 hover:bg-indigo-100/80 hover:text-indigo-900 shadow-3xs',
+                  inactive: 'bg-indigo-50/70 border border-indigo-200/50 text-indigo-700 hover:bg-indigo-100/80 hover:text-indigo-900 dark:bg-indigo-950/45 dark:border-indigo-900/50 dark:text-indigo-300 dark:hover:bg-indigo-900/50 dark:hover:text-indigo-150 shadow-3xs',
                   iconActive: 'text-white',
-                  iconInactive: 'text-indigo-600'
+                  iconInactive: 'text-indigo-600 dark:text-indigo-400'
                 },
                 {
                   id: 'watchlist',
                   label: 'Watchlist Cards',
                   icon: Eye,
                   active: 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/20 scale-[1.03] ring-1 ring-emerald-500/10',
-                  inactive: 'bg-emerald-50/70 border border-emerald-200/50 text-emerald-700 hover:bg-emerald-100/80 hover:text-emerald-900 shadow-3xs',
+                  inactive: 'bg-emerald-50/70 border border-emerald-200/50 text-emerald-700 hover:bg-emerald-100/80 hover:text-emerald-900 dark:bg-emerald-950/45 dark:border-emerald-900/50 dark:text-emerald-300 dark:hover:bg-emerald-900/50 dark:hover:text-emerald-150 shadow-3xs',
                   iconActive: 'text-white',
-                  iconInactive: 'text-emerald-600'
+                  iconInactive: 'text-emerald-600 dark:text-emerald-400'
                 },
                 {
                   id: 'charts',
                   label: 'Historical Trends',
                   icon: LineChart,
                   active: 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md shadow-amber-500/20 scale-[1.03] ring-1 ring-amber-500/10',
-                  inactive: 'bg-amber-50/70 border border-amber-200/50 text-amber-800 hover:bg-amber-100/80 hover:text-amber-950 shadow-3xs',
+                  inactive: 'bg-amber-50/70 border border-amber-200/50 text-amber-800 hover:bg-amber-100/80 hover:text-amber-950 dark:bg-amber-950/45 dark:border-amber-900/50 dark:text-amber-300 dark:hover:bg-amber-900/50 dark:hover:text-amber-150 shadow-3xs',
                   iconActive: 'text-white',
-                  iconInactive: 'text-amber-600'
+                  iconInactive: 'text-amber-600 dark:text-amber-400'
                 },
                 {
                   id: 'insights',
                   label: 'Performance Insights',
                   icon: Sparkles,
                   active: 'bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white shadow-md shadow-fuchsia-600/20 scale-[1.03] ring-1 ring-fuchsia-500/10',
-                  inactive: 'bg-fuchsia-50/70 border border-fuchsia-200/50 text-fuchsia-700 hover:bg-fuchsia-100/80 hover:text-fuchsia-900 shadow-3xs',
+                  inactive: 'bg-fuchsia-50/70 border border-fuchsia-200/50 text-fuchsia-700 hover:bg-fuchsia-100/80 hover:text-fuchsia-900 dark:bg-fuchsia-950/45 dark:border-fuchsia-900/50 dark:text-fuchsia-300 dark:hover:bg-fuchsia-900/50 dark:hover:text-fuchsia-150 shadow-3xs',
                   iconActive: 'text-white',
-                  iconInactive: 'text-fuchsia-600'
+                  iconInactive: 'text-fuchsia-600 dark:text-fuchsia-400'
                 },
                 {
                   id: 'overlap',
                   label: 'Overlap Analyzer',
                   icon: Layers,
                   active: 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-600/20 scale-[1.03] ring-1 ring-blue-500/10',
-                  inactive: 'bg-blue-50/70 border border-blue-200/50 text-blue-700 hover:bg-blue-100/80 hover:text-blue-900 shadow-3xs',
+                  inactive: 'bg-blue-50/70 border border-blue-200/50 text-blue-700 hover:bg-blue-100/80 hover:text-blue-900 dark:bg-blue-950/45 dark:border-blue-900/50 dark:text-blue-300 dark:hover:bg-blue-900/50 dark:hover:text-indigo-150 shadow-3xs',
                   iconActive: 'text-white',
-                  iconInactive: 'text-blue-600'
+                  iconInactive: 'text-blue-600 dark:text-blue-400'
                 },
                 {
                   id: 'portfolio',
                   label: 'Portfolio Backtester',
                   icon: Briefcase,
                   active: 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-md shadow-cyan-600/20 scale-[1.03] ring-1 ring-cyan-500/10',
-                  inactive: 'bg-cyan-50/70 border border-cyan-200/50 text-cyan-700 hover:bg-cyan-100/80 hover:text-cyan-900 shadow-3xs',
+                  inactive: 'bg-cyan-50/70 border border-cyan-200/50 text-cyan-700 hover:bg-cyan-100/80 hover:text-cyan-900 dark:bg-cyan-950/45 dark:border-cyan-900/50 dark:text-cyan-300 dark:hover:bg-cyan-900/50 dark:hover:text-indigo-150 shadow-3xs',
                   iconActive: 'text-white',
-                  iconInactive: 'text-cyan-600'
+                  iconInactive: 'text-cyan-600 dark:text-cyan-400'
                 },
                 {
                   id: 'dividendTax',
                   label: 'Dividend & Tax Estimator',
                   icon: Calculator,
                   active: 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-md shadow-green-600/20 scale-[1.03] ring-1 ring-green-500/10',
-                  inactive: 'bg-green-50/70 border border-green-200/50 text-green-700 hover:bg-green-100/80 hover:text-green-900 shadow-3xs',
+                  inactive: 'bg-green-50/70 border border-green-200/50 text-green-700 hover:bg-green-100/80 hover:text-green-900 dark:bg-green-950/45 dark:border-green-900/50 dark:text-green-300 dark:hover:bg-green-900/50 dark:hover:text-indigo-150 shadow-3xs',
                   iconActive: 'text-white',
-                  iconInactive: 'text-green-600'
+                  iconInactive: 'text-green-600 dark:text-green-400'
                 },
                 {
                   id: 'dca',
                   label: 'DCA Optimizer',
                   icon: Zap,
                   active: 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20 scale-[1.03] ring-1 ring-orange-500/10',
-                  inactive: 'bg-orange-50/70 border border-orange-200/50 text-orange-700 hover:bg-orange-100/80 hover:text-orange-900 shadow-3xs',
+                  inactive: 'bg-orange-50/70 border border-orange-200/50 text-orange-700 hover:bg-orange-100/80 hover:text-orange-900 dark:bg-orange-950/45 dark:border-orange-900/50 dark:text-orange-300 dark:hover:bg-orange-900/50 dark:hover:text-indigo-150 shadow-3xs',
                   iconActive: 'text-white',
-                  iconInactive: 'text-orange-600'
+                  iconInactive: 'text-orange-600 dark:text-orange-400'
                 },
                 {
                   id: 'rebalancer',
                   label: 'Target Rebalancer',
                   icon: Scale,
                   active: 'bg-gradient-to-r from-pink-600 to-rose-600 text-white shadow-md shadow-pink-600/20 scale-[1.03] ring-1 ring-pink-500/10',
-                  inactive: 'bg-pink-50/70 border border-pink-200/50 text-pink-700 hover:bg-pink-100/80 hover:text-pink-900 shadow-3xs',
+                  inactive: 'bg-pink-50/70 border border-pink-200/50 text-pink-700 hover:bg-pink-100/80 hover:text-pink-900 dark:bg-pink-950/45 dark:border-pink-900/50 dark:text-pink-300 dark:hover:bg-pink-900/50 dark:hover:text-indigo-150 shadow-3xs',
                   iconActive: 'text-white',
-                  iconInactive: 'text-pink-600'
+                  iconInactive: 'text-pink-600 dark:text-pink-400'
                 },
                 {
                   id: 'copilot',
                   label: 'AI Investment Copilot',
                   icon: Sparkles,
                   active: 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-600/20 scale-[1.03] ring-1 ring-violet-500/10',
-                  inactive: 'bg-violet-50/70 border border-violet-200/50 text-violet-700 hover:bg-violet-100/80 hover:text-violet-900 shadow-3xs',
+                  inactive: 'bg-violet-100 border border-violet-300 text-violet-950 font-black hover:bg-violet-200 dark:bg-violet-900/55 dark:border-violet-600/70 dark:text-violet-100 dark:hover:bg-violet-800/80 shadow-md ring-1 ring-violet-400/20',
                   iconActive: 'text-white',
-                  iconInactive: 'text-violet-600'
+                  iconInactive: 'text-violet-800 dark:text-violet-300'
                 },
                 {
                   id: 'blog',
                   label: 'Educational Hub',
                   icon: BookOpen,
                   active: 'bg-gradient-to-r from-rose-600 to-red-600 text-white shadow-md shadow-rose-600/20 scale-[1.03] ring-1 ring-rose-500/10',
-                  inactive: 'bg-rose-50/70 border border-rose-200/50 text-rose-700 hover:bg-rose-100/80 hover:text-rose-900 shadow-3xs',
+                  inactive: 'bg-rose-50/70 border border-rose-200/50 text-rose-700 hover:bg-rose-100/80 hover:text-rose-900 dark:bg-rose-950/45 dark:border-rose-900/50 dark:text-rose-300 dark:hover:bg-rose-900/50 dark:hover:text-indigo-150 shadow-3xs',
                   iconActive: 'text-white',
-                  iconInactive: 'text-rose-600'
+                  iconInactive: 'text-rose-600 dark:text-rose-400'
                 }
               ].map(tab => {
                 const IconComponent = tab.icon;

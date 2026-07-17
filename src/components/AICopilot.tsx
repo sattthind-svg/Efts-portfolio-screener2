@@ -356,21 +356,21 @@ Feel free to choose a **preset quick analysis below** or ask any custom investme
     <div className="space-y-6">
       
       {/* Visual Ambient Header Banner */}
-      <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-indigo-900 border border-indigo-500/20 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden shadow-lg">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_120%,rgba(236,72,153,0.15),transparent_50%)]" />
-        <div className="absolute top-4 right-4 animate-pulse flex items-center gap-1.5 bg-indigo-950 border border-indigo-700/50 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-fuchsia-400">
+      <div className="bg-gradient-to-br from-indigo-950 via-slate-950 to-indigo-900 border border-indigo-500/30 rounded-2xl p-6 sm:p-8 text-white relative overflow-hidden shadow-xl">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_120%,rgba(236,72,153,0.18),transparent_50%)]" />
+        <div className="absolute top-4 right-4 animate-pulse flex items-center gap-1.5 bg-indigo-950 border border-indigo-600/70 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-fuchsia-300">
           <Bot className="w-3.5 h-3.5" />
           <span>Active Copilot ⚡️</span>
         </div>
         <div className="relative flex flex-col sm:flex-row items-start sm:items-center gap-5">
-          <div className="p-4 bg-fuchsia-500/10 border border-fuchsia-500/30 text-fuchsia-400 rounded-2xl shrink-0 shadow-lg shadow-fuchsia-500/5">
+          <div className="p-4 bg-fuchsia-500/20 border border-fuchsia-400/45 text-fuchsia-300 rounded-2xl shrink-0 shadow-lg shadow-fuchsia-500/10">
             <Sparkles className="w-8 h-8" />
           </div>
           <div className="space-y-1.5">
-            <h2 className="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2 bg-gradient-to-r from-white via-indigo-50 to-fuchsia-100 bg-clip-text text-transparent">
               Sentinel AI Investment Copilot
             </h2>
-            <p className="text-xs sm:text-sm text-indigo-200 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-indigo-100 font-medium max-w-2xl leading-relaxed">
               Unlock professional-grade quantitative portfolios. Gemini 3.5 Flash evaluates your ETF holdings, scans historical NTA spreads, and suggests low-fee capital growth strategies instantly.
             </p>
           </div>

@@ -923,13 +923,13 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
                 <motion.div 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-indigo-50 border border-indigo-200 text-indigo-800 px-5 py-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  className="bg-indigo-100 border border-indigo-400 text-indigo-950 px-5 py-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm"
                 >
                   <div className="flex items-start gap-3">
                     <span className="text-xl">⚡</span>
                     <div>
-                      <p className="font-bold text-indigo-900">Recommended Landing Presets Loaded</p>
-                      <p className="text-xs text-indigo-700 mt-0.5">
+                      <p className="font-extrabold text-indigo-950">Recommended Landing Presets Loaded</p>
+                      <p className="text-xs text-indigo-900 font-medium mt-0.5">
                         Currently filtering: <strong>Asset Class: Equity</strong>, <strong>Management Fee (MER) &lt; 0.20%</strong>, and <strong>Distribution Yield &gt; 3.0%</strong>. 
                       </p>
                     </div>
@@ -937,7 +937,7 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
                   <div className="flex items-center gap-2">
                     <button
                       onClick={handleClearFilters}
-                      className="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-bold px-3 py-1.5 rounded-xl transition shadow-2xs"
+                      className="bg-indigo-900 hover:bg-indigo-950 text-indigo-50 hover:text-white border border-indigo-850 text-xs font-black px-4 py-2 rounded-xl transition shadow-sm cursor-pointer"
                     >
                       View All 20+ ETFs
                     </button>
@@ -946,18 +946,18 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
               )}
 
               {/* Popular Side-by-Side Comparison Searches Panel */}
-              <div className="bg-gradient-to-r from-slate-900 to-indigo-950 text-white border border-slate-800 rounded-3xl p-5 shadow-sm space-y-3">
+              <div className="bg-gradient-to-r from-slate-950 to-indigo-950 text-white border border-indigo-900 rounded-3xl p-5 shadow-sm space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div>
-                    <h3 className="text-xs font-black uppercase text-indigo-400 tracking-wider flex items-center gap-1.5">
-                      <Scale className="w-4 h-4" />
+                    <h3 className="text-xs font-black uppercase text-indigo-300 tracking-wider flex items-center gap-1.5">
+                      <Scale className="w-4 h-4 text-indigo-400" />
                       Popular Head-to-Head Comparison Searches
                     </h3>
-                    <p className="text-[11px] text-slate-300 mt-0.5">
+                    <p className="text-[11px] text-slate-200 font-medium mt-0.5">
                       Instantly load side-by-side matrices and detailed portfolio advice for common investment queries
                     </p>
                   </div>
-                  <span className="text-[9px] bg-indigo-500/20 text-indigo-300 px-2.5 py-0.5 rounded-full border border-indigo-500/30 font-black uppercase self-start sm:self-auto">
+                  <span className="text-[9px] bg-indigo-500/30 text-indigo-200 px-2.5 py-0.5 rounded-full border border-indigo-400/40 font-black uppercase self-start sm:self-auto">
                     Guided Setups
                   </span>
                 </div>
@@ -969,13 +969,13 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
                       setShowComparisonPanel(true);
                       setActiveInsightTab('ivv_vas');
                     }}
-                    className="bg-slate-800/60 hover:bg-slate-850 border border-slate-700/60 hover:border-indigo-500/40 p-3 rounded-2xl text-left transition group cursor-pointer"
+                    className="bg-slate-800/80 hover:bg-slate-750 border border-slate-700/80 hover:border-indigo-500/50 p-3 rounded-2xl text-left transition group cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-black text-white group-hover:text-indigo-300 transition font-mono">IVV vs VAS vs A200</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-indigo-400 transition" />
+                      <span className="text-[11px] font-black text-white group-hover:text-indigo-200 transition font-mono">IVV vs VAS vs A200</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-indigo-400 group-hover:text-indigo-300 transition" />
                     </div>
-                    <p className="text-[10px] text-slate-400 mt-1 leading-normal">
+                    <p className="text-[10px] text-slate-200 font-medium mt-1 leading-normal">
                       S&amp;P 500 growth vs Aussie high-yield &amp; franking. Extreme cost efficiency analysis.
                     </p>
                   </button>
@@ -986,13 +986,13 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
                       setShowComparisonPanel(true);
                       setActiveInsightTab('vge_vas');
                     }}
-                    className="bg-slate-800/60 hover:bg-slate-850 border border-slate-700/60 hover:border-indigo-500/40 p-3 rounded-2xl text-left transition group cursor-pointer"
+                    className="bg-slate-800/80 hover:bg-slate-750 border border-slate-700/80 hover:border-indigo-500/50 p-3 rounded-2xl text-left transition group cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-black text-white group-hover:text-indigo-300 transition font-mono">VGE vs VAS Comparison</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-indigo-400 transition" />
+                      <span className="text-[11px] font-black text-white group-hover:text-indigo-200 transition font-mono">VGE vs VAS Comparison</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-indigo-400 group-hover:text-indigo-300 transition" />
                     </div>
-                    <p className="text-[10px] text-slate-400 mt-1 leading-normal">
+                    <p className="text-[10px] text-slate-200 font-medium mt-1 leading-normal">
                       Emerging market tech &amp; consumer superpowers vs local broad dividend income.
                     </p>
                   </button>
@@ -1003,13 +1003,13 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
                       setShowComparisonPanel(true);
                       setActiveInsightTab('intl');
                     }}
-                    className="bg-slate-800/60 hover:bg-slate-850 border border-slate-700/60 hover:border-indigo-500/40 p-3 rounded-2xl text-left transition group cursor-pointer"
+                    className="bg-slate-800/80 hover:bg-slate-750 border border-slate-700/80 hover:border-indigo-500/50 p-3 rounded-2xl text-left transition group cursor-pointer"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-black text-white group-hover:text-indigo-300 transition font-mono">International ETF Comparison</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-indigo-400 transition" />
+                      <span className="text-[11px] font-black text-white group-hover:text-indigo-200 transition font-mono">International ETF Comparison</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-indigo-400 group-hover:text-indigo-300 transition" />
                     </div>
-                    <p className="text-[10px] text-slate-400 mt-1 leading-normal">
+                    <p className="text-[10px] text-slate-200 font-medium mt-1 leading-normal">
                       Broad global developed markets vs smart-beta quality factor vs US blue-chips.
                     </p>
                   </button>
@@ -1746,32 +1746,32 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
               <AdPlacement format="skyscraper" />
               
               {onNavigateToBlog && (
-                <div className="bg-indigo-50/40 border border-indigo-150 rounded-2xl p-5 space-y-3.5 shadow-3xs">
+                <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-5 space-y-3.5 shadow-2xs">
                   <span className="font-extrabold text-xs text-indigo-950 uppercase tracking-wider block">📚 Related Educational Guides</span>
-                  <p className="text-[11px] text-slate-500 leading-relaxed">
+                  <p className="text-[11px] text-slate-700 font-medium leading-relaxed">
                     Improve your long-term outcomes with deep analytical strategy reviews written by senior portfolio managers:
                   </p>
                   <div className="space-y-2 pt-0.5">
                     <button
                       onClick={() => onNavigateToBlog('best-low-cost-etfs-2026')}
-                      className="w-full text-left bg-white hover:bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-[11px] font-bold text-slate-800 flex items-center justify-between group transition cursor-pointer"
+                      className="w-full text-left bg-white hover:bg-indigo-50 border border-slate-300 rounded-xl p-2.5 text-[11px] font-extrabold text-indigo-950 flex items-center justify-between group transition cursor-pointer shadow-3xs"
                     >
                       <span>Best Low-Cost ETFs (2026)</span>
-                      <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition" />
+                      <ChevronRight className="w-3.5 h-3.5 text-indigo-600 group-hover:translate-x-0.5 transition" />
                     </button>
                     <button
                       onClick={() => onNavigateToBlog('ivv-vs-vas-comparison')}
-                      className="w-full text-left bg-white hover:bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-[11px] font-bold text-slate-800 flex items-center justify-between group transition cursor-pointer"
+                      className="w-full text-left bg-white hover:bg-indigo-50 border border-slate-300 rounded-xl p-2.5 text-[11px] font-extrabold text-indigo-950 flex items-center justify-between group transition cursor-pointer shadow-3xs"
                     >
                       <span>IVV vs VAS: Which to Buy?</span>
-                      <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition" />
+                      <ChevronRight className="w-3.5 h-3.5 text-indigo-600 group-hover:translate-x-0.5 transition" />
                     </button>
                     <button
                       onClick={() => onNavigateToBlog('how-to-build-a-1m-portfolio')}
-                      className="w-full text-left bg-white hover:bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-[11px] font-bold text-slate-800 flex items-center justify-between group transition cursor-pointer"
+                      className="w-full text-left bg-white hover:bg-indigo-50 border border-slate-300 rounded-xl p-2.5 text-[11px] font-extrabold text-indigo-950 flex items-center justify-between group transition cursor-pointer shadow-3xs"
                     >
                       <span>Build a $1M Portfolio Blueprint</span>
-                      <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:translate-x-0.5 transition" />
+                      <ChevronRight className="w-3.5 h-3.5 text-indigo-600 group-hover:translate-x-0.5 transition" />
                     </button>
                   </div>
                 </div>
