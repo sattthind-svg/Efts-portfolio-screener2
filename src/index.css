@@ -14,70 +14,134 @@
   }
 }
 
-/* Luxury Designer UI Refinements */
+/* Day Mode UI (Default Light Theme) */
 body {
-  background-image: radial-gradient(at top left, #f8fafc, #f1f5f9, #ffffff) !important;
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+  background-image: none !important;
+  background-color: #F8FAFB !important; /* near-white, ultra-light blue-grey background */
+  color: #0F172A !important; /* deep slate — not pure black; easier to read */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Light theme card elevation & polish */
 .bg-white {
-  background-color: #ffffff !important;
-  border-color: rgba(226, 232, 240, 0.8) !important;
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.02), 0 2px 8px -1px rgba(15, 23, 42, 0.02) !important;
+  background-color: #FFFFFF !important; /* pure white for maximum data contrast */
+  border-color: #E2E8F0 !important; /* subtle grey-blue divider */
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.015), 0 2px 8px -1px rgba(15, 23, 42, 0.015) !important;
 }
 
-.bg-slate-50, .bg-slate-50\/80, .bg-slate-50\/50 {
-  background-color: #f8fafc !important;
+.bg-slate-50, .bg-slate-50\/80, .bg-slate-50\/50, .bg-slate-100 {
+  background-color: #F8FAFB !important; /* near-white background canvas */
 }
 
-/* Premium Dark Theme Overrides */
+/* Light Mode Borders and Dividers */
+.border,
+.border-slate-100,
+.border-slate-200,
+.border-slate-250,
+.border-slate-300,
+.border-slate-200\/80,
+.border-slate-200\/60,
+hr {
+  border-color: #E2E8F0 !important; /* subtle grey-blue divider */
+}
+
+/* Light Mode Text Colors */
+.text-slate-950,
+.text-slate-900,
+.text-slate-850,
+.text-slate-800,
+.text-slate-700 {
+  color: #0F172A !important; /* primary deep slate */
+}
+
+.text-slate-600,
+.text-slate-500,
+.text-slate-500\/80 {
+  color: #64748B !important; /* secondary muted slate for labels and metadata */
+}
+
+/* Light Mode Functional Colors */
+.text-emerald-600, [class*="text-emerald-600"] {
+  color: #10B981 !important; /* positive/gain emerald — trust, growth */
+}
+.text-rose-600, [class*="text-rose-600"],
+.text-red-600, [class*="text-red-600"] {
+  color: #EF4444 !important; /* negative/loss red — clear warning */
+}
+.text-indigo-600, [class*="text-indigo-600"],
+.text-blue-600, [class*="text-blue-600"] {
+  color: #3B82F6 !important; /* neutral/data blue — Australian institutional standard */
+}
+.text-amber-600, [class*="text-amber-600"] {
+  color: #F59E0B !important; /* warning/alert amber — NTA discount alerts */
+}
+.text-gray-500, .text-slate-400 {
+  color: #6B7280 !important; /* performance neutral grey — flat metrics */
+}
+
+/* Light Mode Badges */
+span[class*="bg-emerald-50"], div[class*="bg-emerald-50"] {
+  background-color: rgba(16, 185, 129, 0.08) !important;
+  color: #10B981 !important;
+}
+span[class*="bg-rose-50"], div[class*="bg-rose-50"], span[class*="bg-red-50"], div[class*="bg-red-50"] {
+  background-color: rgba(239, 68, 68, 0.08) !important;
+  color: #EF4444 !important;
+}
+span[class*="bg-indigo-50"], div[class*="bg-indigo-50"], span[class*="bg-blue-50"], div[class*="bg-blue-50"] {
+  background-color: rgba(59, 130, 246, 0.08) !important;
+  color: #3B82F6 !important;
+}
+span[class*="bg-amber-50"], div[class*="bg-amber-50"] {
+  background-color: rgba(245, 158, 11, 0.08) !important;
+  color: #F59E0B !important;
+}
+
+
+/* Premium Night Mode (Dark Theme) Overrides */
 .dark {
   color-scheme: dark;
 
-  /* Screen Background - Deep Slate Cosmic */
+  /* Screen Background - Deep Navy Canvas */
   &.min-h-screen, .min-h-screen, body {
-    background-image: radial-gradient(at top left, #070b19, #02040a, #040712) !important;
-    background-color: #02040a !important;
-    color: #f1f5f9 !important;
+    background-image: none !important;
+    background-color: #0F172A !important; /* deep navy — reduces eye strain */
+    color: #F1F5F9 !important; /* cool off-white, not harsh */
   }
 
   /* Background Gradient Overrides */
   .bg-gradient-to-tr {
-    background-image: radial-gradient(at top left, #070b19, #02040a, #040712) !important;
+    background-image: none !important;
+    background-color: #0F172A !important;
   }
 
   /* Header and Nav */
   header {
-    background-color: rgba(4, 7, 18, 0.85) !important;
+    background-color: rgba(15, 23, 42, 0.85) !important; /* matching deep navy */
     backdrop-filter: blur(16px) !important;
-    border-color: #1e293b !important;
+    border-color: #334155 !important; /* dark divider */
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
   }
 
-  /* Wildcard Overrides for absolute coverage of all opacity variations */
-  
-  /* 1. Card Backgrounds */
+  /* 1. Surface Card Backgrounds */
   [class*="bg-white"], 
   .bg-white, 
   .bg-white\/90 {
-    background-color: #0c1328 !important;
-    color: #f1f5f9 !important;
+    background-color: #1E293B !important; /* darker slate surface for visual hierarchy */
+    color: #F1F5F9 !important;
   }
 
-  /* 2. Secondary Panel Backgrounds (Metrics, nested boxes) */
+  /* 2. Secondary Panel Backgrounds (Nested boxes, Slate canvas) */
   [class*="bg-slate-50"],
   [class*="bg-slate-100"],
   .bg-slate-50,
   .bg-slate-100,
   .bg-slate-100\/80,
   .bg-slate-100\/50 {
-    background-color: #060914 !important;
+    background-color: #1E293B !important;
   }
 
-  /* 3. Borders */
+  /* 3. Dark Mode Dividers */
   [class*="border-slate-100"],
   [class*="border-slate-200"],
   [class*="border-slate-250"],
@@ -86,27 +150,26 @@ body {
   .border-slate-200,
   .border-slate-100,
   .border-slate-200\/80,
-  .border-slate-250,
   .border-slate-200\/60,
   hr {
-    border-color: #1a2438 !important;
+    border-color: #334155 !important; /* subtle dark grey-blue divider */
   }
 
   /* Interactive Elements: Inputs, Selects, Sliders */
   input, select, textarea {
-    background-color: #03060f !important;
-    border-color: #24334d !important;
-    color: #f8fafc !important;
+    background-color: #0F172A !important; /* Background deep navy */
+    border-color: #334155 !important; /* divider */
+    color: #F1F5F9 !important;
   }
   input::placeholder {
-    color: #475569 !important;
+    color: #94A3B8 !important;
   }
   select option {
-    background-color: #0c1328 !important;
-    color: #f1f5f9 !important;
+    background-color: #1E293B !important;
+    color: #F1F5F9 !important;
   }
 
-  /* 4. Text Colors */
+  /* 4. Text Colors in Dark Mode */
   [class*="text-slate-950"],
   [class*="text-slate-900"],
   [class*="text-slate-850"],
@@ -114,9 +177,10 @@ body {
   [class*="text-slate-700"],
   .text-slate-950,
   .text-slate-900,
+  .text-slate-850,
   .text-slate-800,
   .text-slate-700 {
-    color: #f1f5f9 !important;
+    color: #F1F5F9 !important; /* primary cool off-white */
   }
 
   [class*="text-slate-600"],
@@ -124,83 +188,88 @@ body {
   .text-slate-600,
   .text-slate-500,
   .text-slate-500\/80 {
-    color: #94a3b8 !important;
+    color: #94A3B8 !important; /* secondary muted silver */
   }
 
   [class*="text-slate-400"] {
-    color: #64748b !important;
+    color: #94A3B8 !important;
   }
 
-  /* Hovers & Interactive States */
-  .hover\:bg-slate-50:hover, 
+  /* Hovers & Interactive States in Dark Mode */
+  .hover\:bg-slate-50:hover,
   .hover\:bg-slate-100:hover, 
   .hover\:bg-slate-100\/50:hover,
   [class*="hover:bg-slate-50"]:hover {
-    background-color: #121b33 !important;
+    background-color: #334155 !important;
   }
 
   /* Table styling */
   table {
-    border-color: #1a2438 !important;
+    border-color: #334155 !important;
   }
   thead, tr, th {
-    border-color: #1a2438 !important;
+    border-color: #334155 !important;
   }
   th {
-    background-color: #03060f !important;
-    color: #94a3b8 !important;
+    background-color: #0F172A !important;
+    color: #94A3B8 !important;
   }
   td {
-    border-color: #1a2438 !important;
-    background-color: #0c1328 !important;
+    border-color: #334155 !important;
+    background-color: #1E293B !important;
   }
 
-  /* Specific color highlights with beautiful, glowing, high-contrast values */
-  .text-indigo-600, [class*="text-indigo-600"] {
-    color: #818cf8 !important;
+  /* Specific color highlights for Dark Mode */
+  .text-indigo-600, [class*="text-indigo-600"],
+  .text-blue-600, [class*="text-blue-600"] {
+    color: #60A5FA !important; /* lighter blue neutral/data for contrast */
   }
   .text-emerald-600, [class*="text-emerald-600"] {
-    color: #34d399 !important;
+    color: #34D399 !important; /* brighter emerald positive/gain pops nicely */
   }
   .text-amber-600, [class*="text-amber-600"] {
-    color: #fbbf24 !important;
+    color: #FBBF24 !important; /* warmer amber warning/alert */
   }
-  .text-rose-600, [class*="text-rose-600"] {
-    color: #f87171 !important;
+  .text-rose-600, [class*="text-rose-600"],
+  .text-red-600, [class*="text-red-600"] {
+    color: #F87171 !important; /* softer red negative/loss is less harsh */
+  }
+  .text-gray-500, .text-slate-400 {
+    color: #9CA3AF !important; /* lighter grey performance neutral */
   }
 
-  /* Ambient highlights & badges */
-  [class*="bg-emerald-50"] {
-    background-color: rgba(16, 185, 129, 0.08) !important;
-    color: #34d399 !important;
+  /* Ambient highlights & badges in Dark Mode */
+  span[class*="bg-emerald-50"], div[class*="bg-emerald-50"] {
+    background-color: rgba(52, 211, 153, 0.08) !important;
+    color: #34D399 !important;
   }
-  [class*="bg-rose-50"] {
-    background-color: rgba(239, 68, 68, 0.08) !important;
-    color: #f87171 !important;
+  span[class*="bg-rose-50"], div[class*="bg-rose-50"], span[class*="bg-red-50"], div[class*="bg-red-50"] {
+    background-color: rgba(248, 113, 113, 0.08) !important;
+    color: #F87171 !important;
   }
-  [class*="bg-indigo-50"] {
-    background-color: rgba(99, 102, 241, 0.08) !important;
-    color: #818cf8 !important;
+  span[class*="bg-indigo-50"], div[class*="bg-indigo-50"], span[class*="bg-blue-50"], div[class*="bg-blue-50"] {
+    background-color: rgba(96, 165, 250, 0.08) !important;
+    color: #60A5FA !important;
   }
-  [class*="bg-amber-50"] {
-    background-color: rgba(245, 158, 11, 0.08) !important;
-    color: #fbbf24 !important;
+  span[class*="bg-amber-50"], div[class*="bg-amber-50"] {
+    background-color: rgba(251, 191, 36, 0.08) !important;
+    color: #FBBF24 !important;
   }
 
   /* Recharts visualization formatting */
   .recharts-cartesian-grid-horizontal line,
   .recharts-cartesian-grid-vertical line {
-    stroke: #1a2438 !important;
+    stroke: #334155 !important;
   }
   .recharts-text {
-    fill: #94a3b8 !important;
+    fill: #94A3B8 !important;
   }
   .recharts-legend-item-text {
-    color: #cbd5e1 !important;
+    color: #F1F5F9 !important;
   }
   .recharts-default-tooltip {
-    background-color: #0c1328 !important;
-    border-color: #1a2438 !important;
+    background-color: #1E293B !important;
+    border-color: #334155 !important;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
   }
 
@@ -209,6 +278,6 @@ body {
   [class*="bg-indigo-50/30"],
   .bg-indigo-50\/40, 
   .bg-indigo-50\/30 {
-    background-color: rgba(99, 102, 241, 0.04) !important;
+    background-color: rgba(96, 165, 250, 0.04) !important;
   }
 }
