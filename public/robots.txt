@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://asxetfscreener.com.au/sitemap.xml

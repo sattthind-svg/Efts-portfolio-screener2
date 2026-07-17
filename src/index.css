@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}
+
+/* Luxury Designer UI Refinements */
+body {
+  background-image: radial-gradient(at top left, #f8fafc, #f1f5f9, #ffffff) !important;
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light theme card elevation & polish */
+.bg-white {
+  background-color: #ffffff !important;
+  border-color: rgba(226, 232, 240, 0.8) !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.02), 0 2px 8px -1px rgba(15, 23, 42, 0.02) !important;
+}
+
+.bg-slate-50, .bg-slate-50\/80, .bg-slate-50\/50 {
+  background-color: #f8fafc !important;
+}
+
+/* Premium Dark Theme Overrides */
+.dark {
+  color-scheme: dark;
+
+  /* Screen Background - Deep Slate Cosmic */
+  &.min-h-screen, .min-h-screen, body {
+    background-image: radial-gradient(at top left, #070b19, #02040a, #040712) !important;
+    background-color: #02040a !important;
+    color: #f1f5f9 !important;
+  }
+
+  /* Background Gradient Overrides */
+  .bg-gradient-to-tr {
+    background-image: radial-gradient(at top left, #070b19, #02040a, #040712) !important;
+  }
+
+  /* Header and Nav */
+  header {
+    background-color: rgba(4, 7, 18, 0.85) !important;
+    backdrop-filter: blur(16px) !important;
+    border-color: #1e293b !important;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Wildcard Overrides for absolute coverage of all opacity variations */
+  
+  /* 1. Card Backgrounds */
+  [class*="bg-white"], 
+  .bg-white, 
+  .bg-white\/90 {
+    background-color: #0c1328 !important;
+    color: #f1f5f9 !important;
+  }
+
+  /* 2. Secondary Panel Backgrounds (Metrics, nested boxes) */
+  [class*="bg-slate-50"],
+  [class*="bg-slate-100"],
+  .bg-slate-50,
+  .bg-slate-100,
+  .bg-slate-100\/80,
+  .bg-slate-100\/50 {
+    background-color: #060914 !important;
+  }
+
+  /* 3. Borders */
+  [class*="border-slate-100"],
+  [class*="border-slate-200"],
+  [class*="border-slate-250"],
+  [class*="border-slate-300"],
+  .border,
+  .border-slate-200,
+  .border-slate-100,
+  .border-slate-200\/80,
+  .border-slate-250,
+  .border-slate-200\/60,
+  hr {
+    border-color: #1a2438 !important;
+  }
+
+  /* Interactive Elements: Inputs, Selects, Sliders */
+  input, select, textarea {
+    background-color: #03060f !important;
+    border-color: #24334d !important;
+    color: #f8fafc !important;
+  }
+  input::placeholder {
+    color: #475569 !important;
+  }
+  select option {
+    background-color: #0c1328 !important;
+    color: #f1f5f9 !important;
+  }
+
+  /* 4. Text Colors */
+  [class*="text-slate-950"],
+  [class*="text-slate-900"],
+  [class*="text-slate-850"],
+  [class*="text-slate-800"],
+  [class*="text-slate-700"],
+  .text-slate-950,
+  .text-slate-900,
+  .text-slate-800,
+  .text-slate-700 {
+    color: #f1f5f9 !important;
+  }
+
+  [class*="text-slate-600"],
+  [class*="text-slate-500"],
+  .text-slate-600,
+  .text-slate-500,
+  .text-slate-500\/80 {
+    color: #94a3b8 !important;
+  }
+
+  [class*="text-slate-400"] {
+    color: #64748b !important;
+  }
+
+  /* Hovers & Interactive States */
+  .hover\:bg-slate-50:hover, 
+  .hover\:bg-slate-100:hover, 
+  .hover\:bg-slate-100\/50:hover,
+  [class*="hover:bg-slate-50"]:hover {
+    background-color: #121b33 !important;
+  }
+
+  /* Table styling */
+  table {
+    border-color: #1a2438 !important;
+  }
+  thead, tr, th {
+    border-color: #1a2438 !important;
+  }
+  th {
+    background-color: #03060f !important;
+    color: #94a3b8 !important;
+  }
+  td {
+    border-color: #1a2438 !important;
+    background-color: #0c1328 !important;
+  }
+
+  /* Specific color highlights with beautiful, glowing, high-contrast values */
+  .text-indigo-600, [class*="text-indigo-600"] {
+    color: #818cf8 !important;
+  }
+  .text-emerald-600, [class*="text-emerald-600"] {
+    color: #34d399 !important;
+  }
+  .text-amber-600, [class*="text-amber-600"] {
+    color: #fbbf24 !important;
+  }
+  .text-rose-600, [class*="text-rose-600"] {
+    color: #f87171 !important;
+  }
+
+  /* Ambient highlights & badges */
+  [class*="bg-emerald-50"] {
+    background-color: rgba(16, 185, 129, 0.08) !important;
+    color: #34d399 !important;
+  }
+  [class*="bg-rose-50"] {
+    background-color: rgba(239, 68, 68, 0.08) !important;
+    color: #f87171 !important;
+  }
+  [class*="bg-indigo-50"] {
+    background-color: rgba(99, 102, 241, 0.08) !important;
+    color: #818cf8 !important;
+  }
+  [class*="bg-amber-50"] {
+    background-color: rgba(245, 158, 11, 0.08) !important;
+    color: #fbbf24 !important;
+  }
+
+  /* Recharts visualization formatting */
+  .recharts-cartesian-grid-horizontal line,
+  .recharts-cartesian-grid-vertical line {
+    stroke: #1a2438 !important;
+  }
+  .recharts-text {
+    fill: #94a3b8 !important;
+  }
+  .recharts-legend-item-text {
+    color: #cbd5e1 !important;
+  }
+  .recharts-default-tooltip {
+    background-color: #0c1328 !important;
+    border-color: #1a2438 !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Ad placements and miscellaneous list layouts */
+  [class*="bg-indigo-50/40"], 
+  [class*="bg-indigo-50/30"],
+  .bg-indigo-50\/40, 
+  .bg-indigo-50\/30 {
+    background-color: rgba(99, 102, 241, 0.04) !important;
+  }
+}

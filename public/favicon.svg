@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Rounded container background -->
+  <rect width="512" height="512" rx="128" fill="url(#logoBg)" />
+  
+  <!-- Subtle grid lines inside background -->
+  <line x1="128" y1="298" x2="384" y2="298" stroke="rgba(255,255,255,0.08)" stroke-width="10" />
+  <line x1="128" y1="213" x2="384" y2="213" stroke="rgba(255,255,255,0.08)" stroke-width="10" />
+  
+  <!-- Vertical Bars representing ETFs/Columns -->
+  <rect x="149" y="256" width="42" height="128" rx="16" fill="url(#barGreen)" />
+  <rect x="235" y="192" width="42" height="192" rx="16" fill="url(#barIndigo)" fill-opacity="0.85" />
+  <rect x="320" y="149" width="42" height="235" rx="16" fill="url(#barOrange)" />
+  
+  <!-- Dynamic Growth Trendline crossing upward -->
+  <path d="M128 320 L224 224 L288 256 L384 128" stroke="url(#lineGradient)" stroke-width="32" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Node point glowing -->
+  <circle cx="384" cy="128" r="26" fill="#ffffff" />
+  
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="logoBg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="barGreen" x1="149" y1="256" x2="191" y2="384" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="barIndigo" x1="235" y1="192" x2="277" y2="384" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+    <linearGradient id="barOrange" x1="320" y1="149" x2="362" y2="384" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fb923c" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+    <linearGradient id="lineGradient" x1="128" y1="320" x2="384" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="50%" stop-color="#ffedd5" />
+      <stop offset="100%" stop-color="#fb923c" />
+    </linearGradient>
+  </defs>
+</svg>

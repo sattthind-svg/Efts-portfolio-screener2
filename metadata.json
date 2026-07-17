@@ -1,0 +1,6 @@
+{
+  "name": "ASX ETF Watchlist",
+  "description": "An interactive dashboard for monitoring ASX and international ETFs, establishing customized target thresholds, tracking buy opportunities, visualizing historical trends, and leveraging an AI Investment Copilot for portfolio audits.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
