@@ -20,7 +20,23 @@ function getAiClient(): GoogleGenAI {
       }
     });
   }
-  return aiClient;
+return aiClient;
+}
+
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 3000): Promise<Response> {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    clearTimeout(id);
+    throw error;
+  }
 }
 
 const DEFAULT_PRICES: Record<string, number> = {
@@ -73,7 +89,7 @@ async function getYahooPrice(ticker: string): Promise<number | null> {
   for (const sym of symbolsToTry) {
     try {
       const url = `https://query2.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=1d`;
-      const res = await fetch(url, {
+      const res = await fetchWithTimeout(url, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
           'Accept': 'application/json',
@@ -129,7 +145,7 @@ async function scrapeVanguard(ticker: string, logs: string[]): Promise<Partial<S
   try {
     const url = `https://www.vanguard.com.au/personal/products/api/v1/fundDetails?portId=${pid}`;
     logs.push(`[Vanguard] Fetching live fund API: ${url}`);
-    const res = await fetch(url, {
+    const res = await fetchWithTimeout(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept': 'application/json',
@@ -173,7 +189,7 @@ async function scrapeBetashares(ticker: string, logs: string[]): Promise<Partial
   try {
     const url = `https://www.betashares.com.au/files/csv/betashares_fund_data.csv`;
     logs.push(`[Betashares] Accessing BetaShares live data pool: ${url}`);
-    const res = await fetch(url, {
+    const res = await fetchWithTimeout(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       }
@@ -219,7 +235,7 @@ async function scrapeiShares(ticker: string, logs: string[]): Promise<Partial<Sc
   try {
     const url = `https://www.blackrock.com/au/individual/products/275304/ishares-s-and-p-500-etf-fund/1435251649735.ajax?fileType=json`;
     logs.push(`[iShares] Fetching live fund AJAX portfolio data: ${url}`);
-    const res = await fetch(url, {
+    const res = await fetchWithTimeout(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
       }
@@ -257,7 +273,7 @@ async function scrapeYahooFinance(ticker: string, logs: string[]): Promise<Parti
     try {
       const url = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${sym}?modules=price,summaryDetail,defaultKeyStatistics`;
       logs.push(`[Yahoo] Querying modules [price, summaryDetail, defaultKeyStatistics] for ${sym}...`);
-      const res = await fetch(url, {
+      const res = await fetchWithTimeout(url, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
           'Accept': 'application/json',
@@ -427,95 +443,105 @@ app.get("/api/price/:ticker", async (req, res) => {
 
   // API Route for Automated Real-Time Issuer Scraper Engine
   app.post("/api/scrape-metrics", async (req, res) => {
-    const { tickers } = req.body;
-    if (!Array.isArray(tickers)) {
-      res.status(400).json({ error: "Tickers must be an array" });
-      return;
+    try {
+      const { tickers } = req.body;
+      if (!Array.isArray(tickers)) {
+        res.status(400).json({ error: "Tickers must be an array" });
+        return;
+      }
+
+      const results: Record<string, ScrapedETFData> = {};
+
+      await Promise.all(tickers.map(async (ticker) => {
+        const logs: string[] = [];
+        logs.push(`Starting automated real-time scraper pipeline for ticker: ${ticker}`);
+        
+        try {
+          let scrapedData: Partial<ScrapedETFData> = {};
+          let isScraped = false;
+
+          // 1. Try Vanguard Scraper
+          const vanguardRes = await scrapeVanguard(ticker, logs);
+          if (vanguardRes) {
+            scrapedData = { ...scrapedData, ...vanguardRes };
+            isScraped = true;
+          }
+
+          // 2. Try Betashares Scraper
+          const betaRes = await scrapeBetashares(ticker, logs);
+          if (betaRes) {
+            scrapedData = { ...scrapedData, ...betaRes };
+            isScraped = true;
+          }
+
+          // 3. Try iShares Scraper
+          const ishareRes = await scrapeiShares(ticker, logs);
+          if (ishareRes) {
+            scrapedData = { ...scrapedData, ...ishareRes };
+            isScraped = true;
+          }
+
+          // 4. Try Yahoo Finance Multi-Module Scraper (Merges / Supplements live info)
+          const yahooRes = await scrapeYahooFinance(ticker, logs);
+          if (yahooRes) {
+            scrapedData = { ...scrapedData, ...yahooRes };
+            isScraped = true;
+          }
+
+          // Fill in details and perform recalculations if we successfully scraped something
+          if (isScraped) {
+            // If price is missing, use getYahooPrice or fallback price
+            if (scrapedData.price === undefined || scrapedData.price === null) {
+              logs.push(`[Pipeline] Fetching market price for ${ticker}...`);
+              const p = await getYahooPrice(ticker);
+              scrapedData.price = p !== null ? p : getFallbackPrice(ticker);
+            }
+
+            // If NTA is missing, approximate it or use price
+            if (scrapedData.nta === undefined || scrapedData.nta === null) {
+              scrapedData.nta = scrapedData.price;
+            }
+
+            // Recalculate premium discount percentage
+            if (scrapedData.price && scrapedData.nta) {
+              scrapedData.premiumDiscount = Number((((scrapedData.price - scrapedData.nta) / scrapedData.nta) * 100).toFixed(2));
+            }
+
+            const sym = ticker.toUpperCase().trim();
+            const hashVal = (sym.charCodeAt(0) * 3 + sym.charCodeAt(sym.length - 1)) % 40 + 30;
+            const premOffset = scrapedData.premiumDiscount ? Math.round(scrapedData.premiumDiscount * 4) : 0;
+            const finalRsiVal = Math.max(15, Math.min(85, hashVal + premOffset));
+            const isBullishVal = (sym.charCodeAt(0) % 2 === 0) || (scrapedData.premiumDiscount && scrapedData.premiumDiscount > -0.2);
+            const smaStatusVal = isBullishVal ? 'Bullish ↗' : 'Bearish ↘';
+
+            results[ticker] = {
+              price: scrapedData.price || null,
+              nta: scrapedData.nta || null,
+              premiumDiscount: scrapedData.premiumDiscount ?? null,
+              pe: scrapedData.pe ?? null,
+              yield: scrapedData.yield ?? null,
+              expenseRatio: scrapedData.expenseRatio ?? null,
+              fundSize: scrapedData.fundSize ?? null,
+              rsi: finalRsiVal,
+              sma100Status: smaStatusVal,
+              source: scrapedData.source || 'Hybrid Scraper Suite',
+              log: logs
+            };
+          } else {
+            // Fallback to elegant simulated master scraper
+            results[ticker] = getHighFidelityScrapeFallback(ticker, logs);
+          }
+        } catch (tickerErr: any) {
+          logs.push(`[Pipeline] Error during ticker scraping pipeline: ${tickerErr.message || tickerErr}`);
+          results[ticker] = getHighFidelityScrapeFallback(ticker, logs);
+        }
+      }));
+
+      res.json({ scraped: results });
+    } catch (routeErr: any) {
+      console.error("Global scraping error:", routeErr);
+      res.status(500).json({ error: "Scraper execution failed, global route error" });
     }
-
-    const results: Record<string, ScrapedETFData> = {};
-
-    for (const ticker of tickers) {
-      const logs: string[] = [];
-      logs.push(`Starting automated real-time scraper pipeline for ticker: ${ticker}`);
-      
-      let scrapedData: Partial<ScrapedETFData> = {};
-      let isScraped = false;
-
-      // 1. Try Vanguard Scraper
-      const vanguardRes = await scrapeVanguard(ticker, logs);
-      if (vanguardRes) {
-        scrapedData = { ...scrapedData, ...vanguardRes };
-        isScraped = true;
-      }
-
-      // 2. Try Betashares Scraper
-      const betaRes = await scrapeBetashares(ticker, logs);
-      if (betaRes) {
-        scrapedData = { ...scrapedData, ...betaRes };
-        isScraped = true;
-      }
-
-      // 3. Try iShares Scraper
-      const ishareRes = await scrapeiShares(ticker, logs);
-      if (ishareRes) {
-        scrapedData = { ...scrapedData, ...ishareRes };
-        isScraped = true;
-      }
-
-      // 4. Try Yahoo Finance Multi-Module Scraper (Merges / Supplements live info)
-      const yahooRes = await scrapeYahooFinance(ticker, logs);
-      if (yahooRes) {
-        scrapedData = { ...scrapedData, ...yahooRes };
-        isScraped = true;
-      }
-
-      // Fill in details and perform recalculations if we successfully scraped something
-      if (isScraped) {
-        // If price is missing, use getYahooPrice or fallback price
-        if (scrapedData.price === undefined || scrapedData.price === null) {
-          logs.push(`[Pipeline] Fetching market price for ${ticker}...`);
-          const p = await getYahooPrice(ticker);
-          scrapedData.price = p !== null ? p : getFallbackPrice(ticker);
-        }
-
-        // If NTA is missing, approximate it or use price
-        if (scrapedData.nta === undefined || scrapedData.nta === null) {
-          scrapedData.nta = scrapedData.price;
-        }
-
-        // Recalculate premium discount percentage
-        if (scrapedData.price && scrapedData.nta) {
-          scrapedData.premiumDiscount = Number((((scrapedData.price - scrapedData.nta) / scrapedData.nta) * 100).toFixed(2));
-        }
-
-        const sym = ticker.toUpperCase().trim();
-        const hashVal = (sym.charCodeAt(0) * 3 + sym.charCodeAt(sym.length - 1)) % 40 + 30;
-        const premOffset = scrapedData.premiumDiscount ? Math.round(scrapedData.premiumDiscount * 4) : 0;
-        const finalRsiVal = Math.max(15, Math.min(85, hashVal + premOffset));
-        const isBullishVal = (sym.charCodeAt(0) % 2 === 0) || (scrapedData.premiumDiscount && scrapedData.premiumDiscount > -0.2);
-        const smaStatusVal = isBullishVal ? 'Bullish ↗' : 'Bearish ↘';
-
-        results[ticker] = {
-          price: scrapedData.price || null,
-          nta: scrapedData.nta || null,
-          premiumDiscount: scrapedData.premiumDiscount ?? null,
-          pe: scrapedData.pe ?? null,
-          yield: scrapedData.yield ?? null,
-          expenseRatio: scrapedData.expenseRatio ?? null,
-          fundSize: scrapedData.fundSize ?? null,
-          rsi: finalRsiVal,
-          sma100Status: smaStatusVal,
-          source: scrapedData.source || 'Hybrid Scraper Suite',
-          log: logs
-        };
-      } else {
-        // Fallback to elegant simulated master scraper
-        results[ticker] = getHighFidelityScrapeFallback(ticker, logs);
-      }
-    }
-
-    res.json({ scraped: results });
   });
 
   // API Route for Sentinel AI Copilot powered by Gemini 3.5 Flash
