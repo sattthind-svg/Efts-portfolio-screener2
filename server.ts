@@ -1,6 +1,5 @@
 import express from "express";
 import path from "path";
-import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 
 let aiClient: GoogleGenAI | null = null;
@@ -460,29 +459,29 @@ app.get("/api/price/:ticker", async (req, res) => {
           let scrapedData: Partial<ScrapedETFData> = {};
           let isScraped = false;
 
-          // 1. Try Vanguard Scraper
-          const vanguardRes = await scrapeVanguard(ticker, logs);
+          // Run all scrapers in parallel to maximize performance and avoid timeouts
+          const [vanguardRes, betaRes, ishareRes, yahooRes] = await Promise.all([
+            scrapeVanguard(ticker, logs).catch(err => { logs.push(`[Vanguard Error] ${err.message || err}`); return null; }),
+            scrapeBetashares(ticker, logs).catch(err => { logs.push(`[Betashares Error] ${err.message || err}`); return null; }),
+            scrapeiShares(ticker, logs).catch(err => { logs.push(`[iShares Error] ${err.message || err}`); return null; }),
+            scrapeYahooFinance(ticker, logs).catch(err => { logs.push(`[Yahoo Error] ${err.message || err}`); return null; })
+          ]);
+
           if (vanguardRes) {
             scrapedData = { ...scrapedData, ...vanguardRes };
             isScraped = true;
           }
 
-          // 2. Try Betashares Scraper
-          const betaRes = await scrapeBetashares(ticker, logs);
           if (betaRes) {
             scrapedData = { ...scrapedData, ...betaRes };
             isScraped = true;
           }
 
-          // 3. Try iShares Scraper
-          const ishareRes = await scrapeiShares(ticker, logs);
           if (ishareRes) {
             scrapedData = { ...scrapedData, ...ishareRes };
             isScraped = true;
           }
 
-          // 4. Try Yahoo Finance Multi-Module Scraper (Merges / Supplements live info)
-          const yahooRes = await scrapeYahooFinance(ticker, logs);
           if (yahooRes) {
             scrapedData = { ...scrapedData, ...yahooRes };
             isScraped = true;
@@ -602,6 +601,7 @@ Instructions:
   // Vite middleware setup for dev vs production
   async function setupVite() {
     if (process.env.NODE_ENV !== "production") {
+      const { createServer: createViteServer } = await import("vite");
       const vite = await createViteServer({
         server: { middlewareMode: true },
         appType: "spa",
