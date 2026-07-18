@@ -19,6 +19,62 @@
       "dest": "server.ts"
     },
     {
+      "src": "/sitemap.xml",
+      "dest": "/sitemap.xml"
+    },
+    {
+      "src": "/robots.txt",
+      "dest": "/robots.txt"
+    },
+    {
+      "src": "/ads.txt",
+      "dest": "/ads.txt"
+    },
+    {
+      "src": "/google5f7e6b3b4bd0ee68.html",
+      "dest": "/google5f7e6b3b4bd0ee68.html"
+    },
+    {
+      "src": "/site.webmanifest",
+      "dest": "/site.webmanifest"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/favicon.ico"
+    },
+    {
+      "src": "/favicon.svg",
+      "dest": "/favicon.svg"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "dest": "/apple-touch-icon.png"
+    },
+    {
+      "src": "/favicon-16x16.png",
+      "dest": "/favicon-16x16.png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "dest": "/favicon-32x32.png"
+    },
+    {
+      "src": "/favicon-48x48.png",
+      "dest": "/favicon-48x48.png"
+    },
+    {
+      "src": "/favicon-96x96.png",
+      "dest": "/favicon-96x96.png"
+    },
+    {
+      "src": "/android-chrome-192x192.png",
+      "dest": "/android-chrome-192x192.png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "dest": "/android-chrome-512x512.png"
+    },
+    {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
     },
