@@ -594,6 +594,31 @@ Instructions:
     }
   });
 
+  // Explicit routes for search engine crawlers & brand assets to bypass SPA wildcard fallback
+  app.get("/sitemap.xml", (req, res) => {
+    res.header("Content-Type", "application/xml");
+    res.sendFile(path.join(process.cwd(), "public", "sitemap.xml"));
+  });
+
+  app.get("/robots.txt", (req, res) => {
+    res.header("Content-Type", "text/plain");
+    res.sendFile(path.join(process.cwd(), "public", "robots.txt"));
+  });
+
+  app.get("/ads.txt", (req, res) => {
+    res.header("Content-Type", "text/plain");
+    res.sendFile(path.join(process.cwd(), "public", "ads.txt"));
+  });
+
+  app.get("/site.webmanifest", (req, res) => {
+    res.header("Content-Type", "application/manifest+json");
+    res.sendFile(path.join(process.cwd(), "public", "site.webmanifest"));
+  });
+
+  app.get("/apple-touch-icon.png", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "public", "apple-touch-icon.png"));
+  });
+
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok" });
   });
