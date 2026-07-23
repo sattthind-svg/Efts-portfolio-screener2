@@ -48,17 +48,31 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
     </noscript>
 
-    <!-- Google AdSense (Deferred to prevent blocking initial paint/FCP) -->
+    <!-- Google AdSense (Lazy loaded on user interaction or requestIdleCallback to maximize speed scores) -->
     <script>
-      window.addEventListener('load', function() {
-        setTimeout(function() {
+      (function() {
+        var loaded = false;
+        function loadAdSense() {
+          if (loaded) return;
+          loaded = true;
           var adScript = document.createElement('script');
           adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7683037506200285";
           adScript.async = true;
           adScript.crossOrigin = "anonymous";
           document.head.appendChild(adScript);
-        }, 100);
-      });
+          ['keydown', 'mousemove', 'touchstart', 'scroll'].forEach(function(e) {
+            window.removeEventListener(e, loadAdSense);
+          });
+        }
+        ['keydown', 'mousemove', 'touchstart', 'scroll'].forEach(function(e) {
+          window.addEventListener(e, loadAdSense, { passive: true });
+        });
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(function() { setTimeout(loadAdSense, 3000); });
+        } else {
+          setTimeout(loadAdSense, 3500);
+        }
+      })();
     </script>
 
     <!-- JSON-LD Structured Data (Schema.org) for Rich Snippets -->

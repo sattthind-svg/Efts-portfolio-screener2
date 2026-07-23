@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { 
   TrendingUp, 
@@ -31,27 +31,38 @@ import {
   Zap,
   Scale,
   Sun,
-  Moon
+  Moon,
+  MessageSquare,
+  Lightbulb,
+  Loader2
 } from 'lucide-react';
 
 import { ETF, ETFRules, ETFCurrentData, HistoryEntry } from './types';
 import { getDefaultWatchlist, generateDefaultHistory, checkRules } from './data';
 import WatchlistCard from './components/WatchlistCard';
-import HistoryCharts from './components/HistoryCharts';
-import InsightsView from './components/InsightsView';
-import { OverlapView } from './components/OverlapView';
-import PortfolioBuilder from './components/PortfolioBuilder';
-import DividendTaxEstimator from './components/DividendTaxEstimator';
-import DCAOptimizer from './components/DCAOptimizer';
-import PortfolioRebalancer from './components/PortfolioRebalancer';
-import AICopilot from './components/AICopilot';
 import AdPlacement from './components/AdPlacement';
 import ETFScreener from './components/ETFScreener';
-import { BlogView } from './components/BlogView';
-import { VisitorFeedback } from './components/VisitorFeedback';
-import { MessageSquare, Lightbulb } from 'lucide-react';
 import { SCREENER_ETFS } from './screenerData';
 import { BLOG_POSTS } from './blogData';
+
+// Lazy loaded non-critical tabs for improved initial bundle size & load speed
+const HistoryCharts = lazy(() => import('./components/HistoryCharts'));
+const InsightsView = lazy(() => import('./components/InsightsView'));
+const OverlapView = lazy(() => import('./components/OverlapView').then(m => ({ default: m.OverlapView })));
+const PortfolioBuilder = lazy(() => import('./components/PortfolioBuilder'));
+const DividendTaxEstimator = lazy(() => import('./components/DividendTaxEstimator'));
+const DCAOptimizer = lazy(() => import('./components/DCAOptimizer'));
+const PortfolioRebalancer = lazy(() => import('./components/PortfolioRebalancer'));
+const AICopilot = lazy(() => import('./components/AICopilot'));
+const BlogView = lazy(() => import('./components/BlogView').then(m => ({ default: m.BlogView })));
+const VisitorFeedback = lazy(() => import('./components/VisitorFeedback').then(m => ({ default: m.VisitorFeedback })));
+
+const ComponentLoader = () => (
+  <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-[#1E293B] rounded-2xl border border-slate-200 dark:border-[#334155] shadow-xs">
+    <Loader2 className="w-8 h-8 text-indigo-600 dark:text-indigo-400 animate-spin mb-3" />
+    <span className="text-xs font-bold text-slate-600 dark:text-slate-300">Loading module...</span>
+  </div>
+);
 
 export default function App() {
   const [watchlist, setWatchlist] = useState<ETF[]>(() => {
@@ -1552,65 +1563,67 @@ export default function App() {
           </div>
         )}
 
-        {activeTab === 'charts' && (
-          <HistoryCharts
-            watchlist={watchlist}
-            selectedChartTicker={selectedChartTicker}
-            setSelectedChartTicker={setSelectedChartTicker}
-            getHistoryForTicker={getHistoryForTicker}
-          />
-        )}
+        <Suspense fallback={<ComponentLoader />}>
+          {activeTab === 'charts' && (
+            <HistoryCharts
+              watchlist={watchlist}
+              selectedChartTicker={selectedChartTicker}
+              setSelectedChartTicker={setSelectedChartTicker}
+              getHistoryForTicker={getHistoryForTicker}
+            />
+          )}
 
-        {activeTab === 'insights' && (
-          <InsightsView watchlist={watchlist} />
-        )}
+          {activeTab === 'insights' && (
+            <InsightsView watchlist={watchlist} />
+          )}
 
-        {activeTab === 'screener' && (
-          <ETFScreener 
-            onAddToWatchlist={addScreenerETFToWatchlist}
-            watchlistTickers={watchlist.map(e => e.ticker)}
-            onNavigateToBlog={handleNavigateToBlog}
-          />
-        )}
+          {activeTab === 'screener' && (
+            <ETFScreener 
+              onAddToWatchlist={addScreenerETFToWatchlist}
+              watchlistTickers={watchlist.map(e => e.ticker)}
+              onNavigateToBlog={handleNavigateToBlog}
+            />
+          )}
 
-        {activeTab === 'overlap' && (
-          <OverlapView 
-            watchlist={watchlist} 
-            onNavigateToBlog={handleNavigateToBlog}
-          />
-        )}
+          {activeTab === 'overlap' && (
+            <OverlapView 
+              watchlist={watchlist} 
+              onNavigateToBlog={handleNavigateToBlog}
+            />
+          )}
 
-        {activeTab === 'portfolio' && (
-          <PortfolioBuilder watchlist={watchlist} />
-        )}
+          {activeTab === 'portfolio' && (
+            <PortfolioBuilder watchlist={watchlist} />
+          )}
 
-        {activeTab === 'dividendTax' && (
-          <DividendTaxEstimator watchlist={watchlist} />
-        )}
+          {activeTab === 'dividendTax' && (
+            <DividendTaxEstimator watchlist={watchlist} />
+          )}
 
-        {activeTab === 'dca' && (
-          <DCAOptimizer />
-        )}
+          {activeTab === 'dca' && (
+            <DCAOptimizer />
+          )}
 
-        {activeTab === 'rebalancer' && (
-          <PortfolioRebalancer />
-        )}
+          {activeTab === 'rebalancer' && (
+            <PortfolioRebalancer />
+          )}
 
-        {activeTab === 'copilot' && (
-          <AICopilot watchlist={watchlist} />
-        )}
+          {activeTab === 'copilot' && (
+            <AICopilot watchlist={watchlist} />
+          )}
 
-        {activeTab === 'blog' && (
-          <BlogView
-            onNavigateToTab={handleNavigateToTab}
-            selectedPostId={selectedBlogPostId}
-            onSelectPost={setSelectedBlogPostId}
-          />
-        )}
+          {activeTab === 'blog' && (
+            <BlogView
+              onNavigateToTab={handleNavigateToTab}
+              selectedPostId={selectedBlogPostId}
+              onSelectPost={setSelectedBlogPostId}
+            />
+          )}
 
-        {activeTab === 'feedback' && (
-          <VisitorFeedback standaloneColumn={true} />
-        )}
+          {activeTab === 'feedback' && (
+            <VisitorFeedback standaloneColumn={true} />
+          )}
+        </Suspense>
 
         {/* Floating Feedback Trigger Button for Instant Visitor Suggestions */}
         <div className="fixed bottom-6 right-6 z-40">
@@ -1630,11 +1643,13 @@ export default function App() {
         </div>
 
         {/* Feedback Modal */}
-        <VisitorFeedback
-          isOpen={showFeedbackModal}
-          onClose={() => setShowFeedbackModal(false)}
-          standaloneColumn={false}
-        />
+        <Suspense fallback={null}>
+          <VisitorFeedback
+            isOpen={showFeedbackModal}
+            onClose={() => setShowFeedbackModal(false)}
+            standaloneColumn={false}
+          />
+        </Suspense>
 
         {/* Dynamic Ad Placement Monetization Hub */}
         <div className="mt-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
