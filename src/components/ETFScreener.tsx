@@ -1072,6 +1072,7 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
                     <select
                       value={assetClassFilter}
                       onChange={(e) => setAssetClassFilter(e.target.value)}
+                      aria-label="Asset Class Category"
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 outline-hidden focus:border-indigo-500 cursor-pointer"
                     >
                       <option value="All">All Categories</option>
@@ -1100,6 +1101,7 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
                       step="0.01"
                       value={maxMerFilter}
                       onChange={(e) => setMaxMerFilter(parseFloat(e.target.value))}
+                      aria-label="Max Expense Ratio (MER)"
                       className="w-full accent-indigo-600 h-1.5 bg-slate-100 rounded-lg cursor-pointer"
                     />
                   </div>
@@ -1121,6 +1123,7 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
                       step="0.10"
                       value={minYieldFilter}
                       onChange={(e) => setMinYieldFilter(parseFloat(e.target.value))}
+                      aria-label="Min Distribution Yield"
                       className="w-full accent-emerald-600 h-1.5 bg-slate-100 rounded-lg cursor-pointer"
                     />
                   </div>
@@ -1137,6 +1140,7 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
                         placeholder="Search e.g. IVV, VAS..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
+                        aria-label="Search Symbol or Name"
                         className="w-full bg-slate-50 border border-slate-200 focus:bg-white focus:border-indigo-500 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-800 outline-hidden transition font-bold"
                       />
                     </div>
@@ -1173,6 +1177,7 @@ export default function ETFScreener({ onAddToWatchlist, watchlistTickers = [], o
                       <select
                         value={minReturn1Y}
                         onChange={(e) => setMinReturn1Y(parseInt(e.target.value))}
+                        aria-label="Min 1Y Return"
                         className="bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold px-2 py-1 text-slate-700 outline-hidden"
                       >
                         <option value="-20">Any Return</option>

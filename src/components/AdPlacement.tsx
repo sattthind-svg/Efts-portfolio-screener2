@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Shield, HelpCircle, Code, CheckCircle, ExternalLink, Settings, Sparkles, BookOpen, AlertTriangle } from 'lucide-react';
 
 interface AdPlacementProps {
@@ -11,19 +11,18 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
     format === 'responsive' ? 'horizontal' : format as any
   );
   const [showConfigGuide, setShowConfigGuide] = useState(false);
+  const insRef = useRef<HTMLModElement | null>(null);
 
   // Get Publisher ID from environment config (populated in AI Studio UI settings)
   const adClientId = (import.meta as any).env?.VITE_ADSENSE_CLIENT_ID || 'ca-pub-7683037506200285';
 
-  // Dynamically inject the script tag in production when client ID is provided
+  // Dynamically ensure script tag is in head if not already present from index.html
   useEffect(() => {
-    if (adClientId) {
-      const scriptId = 'adsense-loader-script';
-      let script = document.getElementById(scriptId) as HTMLScriptElement;
-      
-      if (!script) {
-        script = document.createElement('script');
-        script.id = scriptId;
+    if (adClientId && typeof document !== 'undefined') {
+      const existingScript = document.querySelector('script[src*="adsbygoogle.js"]');
+      if (!existingScript) {
+        const script = document.createElement('script');
+        script.id = 'adsense-loader-script';
         script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClientId}`;
         script.crossOrigin = 'anonymous';
         script.async = true;
@@ -34,31 +33,34 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
 
   // Push individual ad initialization inside the SPA component life cycle
   useEffect(() => {
-    if (adClientId) {
+    if (adClientId && typeof window !== 'undefined') {
       try {
-        ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+        const el = insRef.current;
+        if (el && !el.getAttribute('data-adsbygoogle-status')) {
+          ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
+        }
       } catch (e) {
-        console.warn('AdSense script initialization deferred or blocked: ', e);
+        // AdSense script warning or ad-blocker intervention
+        console.warn('AdSense script push deferred or blocked by browser:', e);
       }
     }
   }, [activeFormat, adClientId]);
 
-  // Determine if we are running on the live published custom domain or if we're in a clean preview
+  // Determine if we are running on the live published custom domain or preview environment
   const isPublishedSite = typeof window !== 'undefined' && (
     window.location.hostname === 'asxetfscreener.com.au' ||
     window.location.hostname === 'www.asxetfscreener.com.au' ||
-    // If not running on localhost, local IP, or development preview URL, treat as clean published site
     (!window.location.hostname.includes('localhost') && 
      !window.location.hostname.includes('127.0.0.1') && 
      !window.location.hostname.includes('ais-dev-'))
   );
 
   if (isPublishedSite) {
-    // On the published website, we render a completely clean, standard AdSense ad slot 
-    // without any of the development-only format selectors, setup manuals, borders, or simulated previews.
+    // On the published website, render a clean, standard AdSense ad slot
     return (
       <div className="w-full flex justify-center items-center py-4 my-2 overflow-hidden">
         <ins
+          ref={insRef}
           className="adsbygoogle"
           style={{ display: 'block', width: '100%', minHeight: '90px' }}
           data-ad-client={adClientId}
@@ -87,7 +89,7 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
         <div className="flex flex-wrap items-center gap-1.5 self-end sm:self-auto">
           <button
             onClick={() => setActiveFormat('horizontal')}
-            className={`px-2 py-1 text-[10px] font-bold rounded-md transition ${
+            className={`px-2 py-1 text-[10px] font-bold rounded-md transition cursor-pointer ${
               activeFormat === 'horizontal' ? 'bg-slate-950 text-white' : 'bg-slate-200/60 text-slate-600 hover:bg-slate-200'
             }`}
           >
@@ -95,7 +97,7 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
           </button>
           <button
             onClick={() => setActiveFormat('skyscraper')}
-            className={`px-2 py-1 text-[10px] font-bold rounded-md transition ${
+            className={`px-2 py-1 text-[10px] font-bold rounded-md transition cursor-pointer ${
               activeFormat === 'skyscraper' ? 'bg-slate-950 text-white' : 'bg-slate-200/60 text-slate-600 hover:bg-slate-200'
             }`}
           >
@@ -103,7 +105,7 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
           </button>
           <button
             onClick={() => setActiveFormat('rectangle')}
-            className={`px-2 py-1 text-[10px] font-bold rounded-md transition ${
+            className={`px-2 py-1 text-[10px] font-bold rounded-md transition cursor-pointer ${
               activeFormat === 'rectangle' ? 'bg-slate-950 text-white' : 'bg-slate-200/60 text-slate-600 hover:bg-slate-200'
             }`}
           >
@@ -111,7 +113,7 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
           </button>
           <button
             onClick={() => setActiveFormat('native')}
-            className={`px-2 py-1 text-[10px] font-bold rounded-md transition ${
+            className={`px-2 py-1 text-[10px] font-bold rounded-md transition cursor-pointer ${
               activeFormat === 'native' ? 'bg-slate-950 text-white' : 'bg-slate-200/60 text-slate-600 hover:bg-slate-200'
             }`}
           >
@@ -119,7 +121,7 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
           </button>
           <button
             onClick={() => setShowConfigGuide(!showConfigGuide)}
-            className="p-1 text-slate-400 hover:text-slate-950 transition flex items-center gap-1"
+            className="p-1 text-slate-400 hover:text-slate-950 transition flex items-center gap-1 cursor-pointer"
             title="AdSense Setup Guide"
           >
             <Settings className="w-4 h-4" />
@@ -132,8 +134,7 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
         {activeFormat === 'horizontal' && (
           /* Leaderboard Banner (728x90 style) */
           <div className="w-full max-w-[728px] h-[90px] bg-slate-100 border border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center relative overflow-hidden p-4 group transition hover:border-slate-400">
-            {/* Real Ad Container */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-linear-to-r from-indigo-50/10 via-slate-50/30 to-emerald-50/10 p-3 text-center">
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-r from-indigo-50/10 via-slate-50/30 to-emerald-50/10 p-3 text-center">
               <span className="absolute top-2 right-3 text-[8px] font-black text-slate-400 tracking-wider uppercase bg-white border border-slate-200 px-1.5 py-0.5 rounded">
                 Sponsored Ad
               </span>
@@ -145,16 +146,6 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
                 </div>
               </div>
             </div>
-
-            {/* Hidden production AdSense Tag */}
-            {adClientId && (
-              <ins
-                className="adsbygoogle"
-                style={{ display: 'inline-block', width: '728px', height: '90px', opacity: 0, pointerEvents: 'none' }}
-                data-ad-client={adClientId}
-                data-ad-slot={slotId}
-              />
-            )}
           </div>
         )}
 
@@ -166,7 +157,7 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
             </span>
             
             <div className="my-auto space-y-6">
-              <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 border border-emerald-100 text-2xl shadow-2xs">
+              <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 border border-emerald-100 text-2xl shadow-xs">
                 📈
               </span>
               <div className="space-y-2">
@@ -178,22 +169,12 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
               <div className="p-2.5 bg-emerald-50/50 rounded-xl border border-emerald-100 font-mono text-[10px] font-black text-emerald-800">
                 MER: 0.27%
               </div>
-              <button className="w-full bg-slate-950 text-white text-[10px] font-black py-2 rounded-lg hover:bg-slate-800 transition">
+              <button className="w-full bg-slate-950 text-white text-[10px] font-black py-2 rounded-lg hover:bg-slate-800 transition cursor-pointer">
                 Learn More
               </button>
             </div>
 
             <span className="text-[8px] text-slate-400 font-bold tracking-wider uppercase">Vanguard Index</span>
-
-            {/* Hidden production AdSense Tag */}
-            {adClientId && (
-              <ins
-                className="adsbygoogle"
-                style={{ display: 'inline-block', width: '160px', height: '600px', opacity: 0, pointerEvents: 'none' }}
-                data-ad-client={adClientId}
-                data-ad-slot={slotId}
-              />
-            )}
           </div>
         )}
 
@@ -213,20 +194,10 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
                   Flat-fee $9.50 trades. Trade ASX &amp; US shares seamlessly inside Australia's most trusted community broker.
                 </p>
               </div>
-              <button className="bg-slate-950 text-white text-[11px] font-black px-4 py-1.5 rounded-lg border border-slate-950 hover:bg-white hover:text-slate-950 transition">
+              <button className="bg-slate-950 text-white text-[11px] font-black px-4 py-1.5 rounded-lg border border-slate-950 hover:bg-white hover:text-slate-950 transition cursor-pointer">
                 Claim Brokerage Credit
               </button>
             </div>
-
-            {/* Hidden production AdSense Tag */}
-            {adClientId && (
-              <ins
-                className="adsbygoogle"
-                style={{ display: 'inline-block', width: '300px', height: '250px', opacity: 0, pointerEvents: 'none' }}
-                data-ad-client={adClientId}
-                data-ad-slot={slotId}
-              />
-            )}
           </div>
         )}
 
@@ -249,7 +220,7 @@ export default function AdPlacement({ slotId = '1234567890', format = 'horizonta
                   Automatically calculate your franking credits, Australian AMMA tax statements, capital gains distribution, and cost-base adjustments for over 250+ listed funds. Get your instant visual report before tax season.
                 </p>
               </div>
-              <button className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs px-5 py-3 rounded-xl transition shadow-2xs whitespace-nowrap self-stretch sm:self-center flex items-center justify-center gap-1">
+              <button className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs px-5 py-3 rounded-xl transition shadow-xs whitespace-nowrap self-stretch sm:self-center flex items-center justify-center gap-1 cursor-pointer">
                 Calculate Free <ExternalLink className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -329,3 +300,4 @@ google.com, pub-7683037506200285, DIRECT, f08c47fec0942fa0
     </div>
   );
 }
+

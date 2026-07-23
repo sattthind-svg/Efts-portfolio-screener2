@@ -420,6 +420,7 @@ export default function PortfolioRebalancer() {
                         type="number"
                         value={asset.units}
                         onChange={(e) => updateUnits(asset.ticker, parseInt(e.target.value) || 0)}
+                        aria-label={`Units Owned for ${asset.ticker}`}
                         className="w-16 bg-white border border-slate-200 rounded-lg px-1.5 py-1 text-center font-mono font-bold text-xs"
                       />
                     </div>
@@ -436,6 +437,7 @@ export default function PortfolioRebalancer() {
                         max="100"
                         value={asset.targetWeight}
                         onChange={(e) => updateWeight(asset.ticker, parseInt(e.target.value) || 0)}
+                        aria-label={`Target Weight Percentage for ${asset.ticker}`}
                         className="w-24 sm:w-28 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                       />
                     </div>
@@ -465,6 +467,7 @@ export default function PortfolioRebalancer() {
                 placeholder="Ticker (e.g. DHHF)"
                 value={newTicker}
                 onChange={(e) => setNewTicker(e.target.value)}
+                aria-label="New Asset Ticker"
                 className="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-800 placeholder-slate-400 uppercase"
                 required
               />
@@ -473,6 +476,7 @@ export default function PortfolioRebalancer() {
                 placeholder="Price AUD"
                 value={newPrice || ''}
                 onChange={(e) => setNewPrice(parseFloat(e.target.value) || 0)}
+                aria-label="New Asset Price AUD"
                 className="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-mono font-bold text-slate-800"
                 required
               />
@@ -481,12 +485,14 @@ export default function PortfolioRebalancer() {
                 placeholder="Units owned"
                 value={newUnits || ''}
                 onChange={(e) => setNewUnits(parseInt(e.target.value) || 0)}
+                aria-label="New Asset Units Owned"
                 className="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-mono font-bold text-slate-800"
                 required
               />
               <select
                 value={newType}
                 onChange={(e: any) => setNewType(e.target.value)}
+                aria-label="New Asset Structure Type"
                 className="bg-white border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-black text-slate-700 cursor-pointer"
               >
                 <option value="Core">Core</option>

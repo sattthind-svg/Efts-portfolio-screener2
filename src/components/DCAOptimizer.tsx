@@ -221,12 +221,14 @@ export default function DCAOptimizer() {
                   type="number"
                   value={savingsPerPeriod}
                   onChange={(e) => setSavingsPerPeriod(Math.max(10, parseInt(e.target.value) || 0))}
+                  aria-label="Regular Savings Rate Amount"
                   className="w-full bg-slate-50/50 border border-slate-200 rounded-xl py-2 pl-7 pr-3 text-xs font-bold text-slate-800"
                 />
               </div>
               <select
                 value={savingsPeriod}
                 onChange={(e: any) => setSavingsPeriod(e.target.value)}
+                aria-label="Savings Period"
                 className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-black text-slate-700 cursor-pointer"
               >
                 <option value="weekly">Weekly</option>
@@ -241,6 +243,7 @@ export default function DCAOptimizer() {
               step="50"
               value={savingsPerPeriod}
               onChange={(e) => setSavingsPerPeriod(parseInt(e.target.value))}
+              aria-label="Regular Savings Rate Slider"
               className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
             />
           </div>
@@ -251,6 +254,7 @@ export default function DCAOptimizer() {
             <select
               value={selectedBrokerIndex}
               onChange={(e) => setSelectedBrokerIndex(parseInt(e.target.value))}
+              aria-label="Brokerage Platform & Fee structure"
               className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-black text-slate-700 cursor-pointer transition focus:bg-white"
             >
               {COMMON_BROKERS.map((b, i) => (
@@ -275,6 +279,7 @@ export default function DCAOptimizer() {
                   step="0.01"
                   value={customBrokerFee}
                   onChange={(e) => setCustomBrokerFee(parseFloat(e.target.value) || 0)}
+                  aria-label="Custom Fee per Buy Trade"
                   className="w-full bg-slate-50/50 border border-slate-200 rounded-xl py-2 pl-7 pr-3 text-xs font-black text-slate-800"
                 />
               </div>
@@ -291,6 +296,7 @@ export default function DCAOptimizer() {
                   step="0.1"
                   value={expectedReturn}
                   onChange={(e) => setExpectedReturn(parseFloat(e.target.value) || 0)}
+                  aria-label="Expected ETF Return Percentage"
                   className="w-full bg-slate-50/50 border border-slate-200 rounded-xl py-2 px-3 text-xs font-black text-slate-800"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">%</span>
@@ -305,6 +311,7 @@ export default function DCAOptimizer() {
                   step="0.1"
                   value={cashAccountRate}
                   onChange={(e) => setCashAccountRate(parseFloat(e.target.value) || 0)}
+                  aria-label="Savings Account Interest Percentage"
                   className="w-full bg-slate-50/50 border border-slate-200 rounded-xl py-2 px-3 text-xs font-black text-slate-800"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">%</span>
@@ -324,6 +331,7 @@ export default function DCAOptimizer() {
               max="30"
               value={horizonYears}
               onChange={(e) => setHorizonYears(parseInt(e.target.value))}
+              aria-label="Savings Timeline Horizon"
               className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
             />
           </div>

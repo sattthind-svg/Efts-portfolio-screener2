@@ -577,6 +577,7 @@ export default function WatchlistCard({
                     step="0.1"
                     value={etf.rules.ntaDiscount}
                     onChange={(e) => updateRule(etf.ticker, 'ntaDiscount', parseFloat(e.target.value))}
+                    aria-label={`Min Discount threshold for ${etf.ticker}`}
                     className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-800 focus:bg-white outline-hidden focus:border-indigo-500 transition"
                   />
                   <span className={`text-[10px] font-bold mt-1 inline-flex items-center gap-1 ${
@@ -594,6 +595,7 @@ export default function WatchlistCard({
                     step="0.01"
                     value={etf.rules.expenseRatio}
                     onChange={(e) => updateRule(etf.ticker, 'expenseRatio', parseFloat(e.target.value))}
+                    aria-label={`Max Expense threshold for ${etf.ticker}`}
                     className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-800 focus:bg-white outline-hidden focus:border-indigo-500 transition"
                   />
                   <span className={`text-[10px] font-bold mt-1 inline-flex items-center gap-1 ${
@@ -611,6 +613,7 @@ export default function WatchlistCard({
                     step="10"
                     value={etf.rules.fundSize}
                     onChange={(e) => updateRule(etf.ticker, 'fundSize', parseFloat(e.target.value))}
+                    aria-label={`Min Size threshold for ${etf.ticker}`}
                     className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-800 focus:bg-white outline-hidden focus:border-indigo-500 transition"
                   />
                   <span className={`text-[10px] font-bold mt-1 inline-flex items-center gap-1 ${
@@ -628,6 +631,7 @@ export default function WatchlistCard({
                     step="0.1"
                     value={etf.rules.yield}
                     onChange={(e) => updateRule(etf.ticker, 'yield', parseFloat(e.target.value))}
+                    aria-label={`Min Div Yield threshold for ${etf.ticker}`}
                     className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-800 focus:bg-white outline-hidden focus:border-indigo-500 transition"
                   />
                   <span className={`text-[10px] font-bold mt-1 inline-flex items-center gap-1 ${
@@ -671,6 +675,7 @@ export default function WatchlistCard({
                       step="0.01"
                       value={tempMetrics.price !== null ? tempMetrics.price : ''}
                       onChange={(e) => setTempMetrics({ ...tempMetrics, price: parseFloat(e.target.value) || null })}
+                      aria-label={`Current Price for ${etf.ticker}`}
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-850"
                       placeholder="—"
                     />
@@ -682,6 +687,7 @@ export default function WatchlistCard({
                       step="0.01"
                       value={tempMetrics.nta !== null ? tempMetrics.nta : ''}
                       onChange={(e) => setTempMetrics({ ...tempMetrics, nta: parseFloat(e.target.value) || null })}
+                      aria-label={`Current NTA for ${etf.ticker}`}
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-850"
                       placeholder="—"
                     />
@@ -693,6 +699,7 @@ export default function WatchlistCard({
                       step="0.05"
                       value={tempMetrics.yield !== null ? tempMetrics.yield : ''}
                       onChange={(e) => setTempMetrics({ ...tempMetrics, yield: parseFloat(e.target.value) || null })}
+                      aria-label={`Dividend Yield for ${etf.ticker}`}
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-850"
                       placeholder="—"
                     />
@@ -704,6 +711,7 @@ export default function WatchlistCard({
                       step="0.01"
                       value={tempMetrics.expenseRatio !== null ? tempMetrics.expenseRatio : ''}
                       onChange={(e) => setTempMetrics({ ...tempMetrics, expenseRatio: parseFloat(e.target.value) || null })}
+                      aria-label={`Expense Ratio for ${etf.ticker}`}
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-850"
                       placeholder="—"
                     />
@@ -715,6 +723,7 @@ export default function WatchlistCard({
                       step="1"
                       value={tempMetrics.fundSize !== null ? tempMetrics.fundSize : ''}
                       onChange={(e) => setTempMetrics({ ...tempMetrics, fundSize: parseInt(e.target.value) || null })}
+                      aria-label={`Fund Size for ${etf.ticker}`}
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-850"
                       placeholder="—"
                     />
@@ -726,6 +735,7 @@ export default function WatchlistCard({
                       step="0.1"
                       value={tempMetrics.pe !== null ? tempMetrics.pe : ''}
                       onChange={(e) => setTempMetrics({ ...tempMetrics, pe: parseFloat(e.target.value) || null })}
+                      aria-label={`P/E Ratio for ${etf.ticker}`}
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-855"
                       placeholder="—"
                     />
@@ -737,6 +747,7 @@ export default function WatchlistCard({
                       step="0.01"
                       value={tempMetrics.bidAskSpread !== undefined && tempMetrics.bidAskSpread !== null ? tempMetrics.bidAskSpread : ''}
                       onChange={(e) => setTempMetrics({ ...tempMetrics, bidAskSpread: parseFloat(e.target.value) || null })}
+                      aria-label={`Bid-Ask Spread for ${etf.ticker}`}
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-855"
                       placeholder="e.g. 0.04"
                     />
@@ -748,6 +759,7 @@ export default function WatchlistCard({
                       step="1"
                       value={tempMetrics.frankingCredits !== undefined && tempMetrics.frankingCredits !== null ? tempMetrics.frankingCredits : ''}
                       onChange={(e) => setTempMetrics({ ...tempMetrics, frankingCredits: parseFloat(e.target.value) || null })}
+                      aria-label={`Franking Credits for ${etf.ticker}`}
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-855"
                       placeholder="e.g. 75"
                     />

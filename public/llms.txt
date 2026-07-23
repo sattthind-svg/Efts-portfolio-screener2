@@ -1,0 +1,15 @@
+# ASX ETF Screener & Compare Tool
+
+> Comprehensive Australian Securities Exchange (ASX) ETF Screener, Comparison, Tax Calculator, and Portfolio Analytics Platform.
+
+## Core Services & Pages
+
+- [ASX ETF Screener](https://asxetfscreener.com.au/): Interactive screener and filtering tool for all ASX-listed Exchange Traded Funds (ETFs) including Vanguard, Betashares, iShares, VanEck, and Global X.
+- [ETF Comparison Tool](https://asxetfscreener.com.au/compare): Side-by-side analysis of MER management expense ratios, dividend yields, 1/3/5-year total returns, holdings, and sector breakdowns.
+- [Franking Credit & Tax Calculator](https://asxetfscreener.com.au/tax-calculator): Australian tax, franking credit, and AMMA distribution calculator for Australian resident investors.
+- [AI Portfolio Assistant](https://asxetfscreener.com.au/ai-assistant): AI-powered insights for ETF diversification, overlap analysis, and fee optimization.
+
+## Data Sources & API
+
+- [Sitemap](https://asxetfscreener.com.au/sitemap.xml): Complete index of all listed ETFs and pages.
+- [Ads Policy](https://asxetfscreener.com.au/ads.txt): Authorized digital advertising publishers.

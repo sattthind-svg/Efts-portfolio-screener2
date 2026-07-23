@@ -346,6 +346,7 @@ export default function PortfolioBuilder({ watchlist }: PortfolioBuilderProps) {
                           max="100"
                           value={item.weight}
                           onChange={(e) => handleWeightChange(item.ticker, parseInt(e.target.value) || 0)}
+                          aria-label={`Weight percentage for ${item.ticker}`}
                           className="w-12 text-center bg-white border border-slate-250 rounded-md py-0.5 text-xs font-extrabold text-slate-800 focus:outline-hidden focus:border-indigo-500"
                         />
                         <span className="text-xs font-black text-slate-600">%</span>
@@ -365,6 +366,7 @@ export default function PortfolioBuilder({ watchlist }: PortfolioBuilderProps) {
                         max="100"
                         value={item.weight}
                         onChange={(e) => handleWeightChange(item.ticker, parseInt(e.target.value) || 0)}
+                        aria-label={`Weight slider for ${item.ticker}`}
                         className="flex-1 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                       />
                       <span className="text-[10px] font-bold text-slate-400 min-w-[50px] text-right font-mono">
@@ -413,6 +415,7 @@ export default function PortfolioBuilder({ watchlist }: PortfolioBuilderProps) {
                       e.target.value = '';
                     }
                   }}
+                  aria-label="Add available ETF to portfolio"
                   className="flex-1 bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-3 py-2 text-xs font-extrabold text-slate-700 focus:bg-white outline-hidden transition cursor-pointer"
                   defaultValue=""
                 >
@@ -448,6 +451,7 @@ export default function PortfolioBuilder({ watchlist }: PortfolioBuilderProps) {
                     type="number"
                     value={initialPrincipal}
                     onChange={(e) => setInitialPrincipal(Math.max(0, parseInt(e.target.value) || 0))}
+                    aria-label="Initial Capital Amount"
                     className="w-full bg-white border border-slate-200 pl-6 pr-2 py-1.5 rounded-lg text-xs font-black text-slate-800"
                   />
                 </div>
@@ -458,6 +462,7 @@ export default function PortfolioBuilder({ watchlist }: PortfolioBuilderProps) {
                   step="1000"
                   value={initialPrincipal}
                   onChange={(e) => setInitialPrincipal(parseInt(e.target.value))}
+                  aria-label="Initial Capital Slider"
                   className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                 />
               </div>
@@ -471,6 +476,7 @@ export default function PortfolioBuilder({ watchlist }: PortfolioBuilderProps) {
                     type="number"
                     value={monthlyContribution}
                     onChange={(e) => setMonthlyContribution(Math.max(0, parseInt(e.target.value) || 0))}
+                    aria-label="Monthly Deposit Amount"
                     className="w-full bg-white border border-slate-200 pl-6 pr-2 py-1.5 rounded-lg text-xs font-black text-slate-800"
                   />
                 </div>
@@ -481,6 +487,7 @@ export default function PortfolioBuilder({ watchlist }: PortfolioBuilderProps) {
                   step="100"
                   value={monthlyContribution}
                   onChange={(e) => setMonthlyContribution(parseInt(e.target.value))}
+                  aria-label="Monthly Deposit Slider"
                   className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                 />
               </div>
@@ -493,6 +500,7 @@ export default function PortfolioBuilder({ watchlist }: PortfolioBuilderProps) {
                     type="number"
                     value={horizonYears}
                     onChange={(e) => setHorizonYears(Math.max(1, Math.min(40, parseInt(e.target.value) || 1)))}
+                    aria-label="Investment Term in Years"
                     className="w-full bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-black text-slate-800"
                   />
                   <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-black text-slate-400">Yrs</span>
@@ -503,6 +511,7 @@ export default function PortfolioBuilder({ watchlist }: PortfolioBuilderProps) {
                   max="40"
                   value={horizonYears}
                   onChange={(e) => setHorizonYears(parseInt(e.target.value))}
+                  aria-label="Investment Term Slider"
                   className="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                 />
               </div>
@@ -523,6 +532,7 @@ export default function PortfolioBuilder({ watchlist }: PortfolioBuilderProps) {
                   step="0.1"
                   value={effectiveCAGR}
                   onChange={(e) => setCustomCAGR(parseFloat(e.target.value))}
+                  aria-label="Simulated Portfolio Return Rate"
                   className="flex-1 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                 />
                 <span className="font-mono font-black text-slate-900 bg-white border border-slate-250 px-2 py-0.5 rounded-md">

@@ -151,6 +151,7 @@ export function OverlapView({ watchlist, onNavigateToBlog }: OverlapViewProps) {
               <select
                 value={etfA}
                 onChange={(e) => setEtfA(e.target.value)}
+                aria-label="First ETF (A)"
                 className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-lg px-3.5 py-3 text-sm font-extrabold text-slate-800 focus:bg-white outline-hidden focus:ring-2 focus:ring-slate-950/25 focus:border-slate-950 transition appearance-none cursor-pointer"
               >
                 {allTickers.map(ticker => (
@@ -176,6 +177,7 @@ export function OverlapView({ watchlist, onNavigateToBlog }: OverlapViewProps) {
               <select
                 value={etfB}
                 onChange={(e) => setEtfB(e.target.value)}
+                aria-label="Second ETF (B)"
                 className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-lg px-3.5 py-3 text-sm font-extrabold text-slate-800 focus:bg-white outline-hidden focus:ring-2 focus:ring-slate-950/25 focus:border-slate-950 transition appearance-none cursor-pointer"
               >
                 {allTickers.map(ticker => (

@@ -570,6 +570,7 @@ Feel free to choose a **preset quick analysis below** or ask any custom investme
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               disabled={isLoading}
+              aria-label="Ask Sentinel AI Copilot a question"
               className="flex-1 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 focus:border-indigo-500 focus:bg-white dark:focus:bg-slate-800 rounded-xl px-4 py-3 text-sm text-slate-800 dark:text-slate-100 outline-hidden transition placeholder-slate-400 disabled:opacity-60"
             />
             
