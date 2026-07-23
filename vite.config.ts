@@ -13,14 +13,16 @@ export default defineConfig(() => {
     },
     build: {
       sourcemap: true,
-      cssMinify: true,
+      cssMinify: text => text, // Let Tailwind CSS handle minification cleanly
+      target: 'esnext',
       rollupOptions: {
         output: {
-          manualChunks: {
-            'vendor-react': ['react', 'react-dom'],
-            'vendor-charts': ['recharts'],
-            'vendor-icons': ['lucide-react'],
-            'vendor-motion': ['motion'],
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('recharts') || id.includes('d3-')) {
+                return 'charts';
+              }
+            }
           },
         },
       },
