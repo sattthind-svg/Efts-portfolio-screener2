@@ -1,0 +1,20 @@
+# ASX ETF Screener & Compare Tool - Full Technical & Financial Reference
+
+> Comprehensive documentation, calculation methodologies, tax rules, and dataset schemas for Australian Securities Exchange (ASX) Exchange Traded Funds (ETFs).
+
+## Overview
+
+ASX ETF Screener is an independent financial technology platform for Australian retail and institutional investors. It provides real-time and historical analytics across 150+ Australian listed ETFs.
+
+## Core Services
+
+- [ASX ETF Screener](https://asxetfscreener.com.au/): Screen and filter all ASX-listed ETFs by NTA premium/discount, expense ratio (MER), distribution yield, and 1Y/3Y/5Y total returns.
+- [ETF Comparison Tool](https://asxetfscreener.com.au/compare): Side-by-side asset allocation, top 10 holdings, sector exposure, and fee comparisons.
+- [Franking Credit & Tax Calculator](https://asxetfscreener.com.au/tax-calculator): Australian resident tax estimator supporting franked dividends, AMMA attribution components, and tax bracket calculations.
+- [Portfolio Overlap Analyzer](https://asxetfscreener.com.au/overlap): Stock-level holding overlap analysis to prevent over-concentration (e.g., VAS vs A200, IVV vs VGS).
+- [Dollar Cost Averaging Optimizer](https://asxetfscreener.com.au/dca): Optimal buy frequency calculator balancing brokerage fees against cash drag.
+
+## Data Schemas & API Endpoints
+
+- [Sitemap](https://asxetfscreener.com.au/sitemap.xml): Complete URL index.
+- [Ads Policy](https://asxetfscreener.com.au/ads.txt): Digital ad publisher validation.

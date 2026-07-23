@@ -36,8 +36,30 @@
     <meta property="twitter:description" content="Compare Australian ASX ETFs with our premium screener. Track NTA discounts, expense ratios, dividends, and get buy signals on your custom ETF watchlist." />
     <meta property="twitter:image" content="https://asxetfscreener.com.au/assets/og-image.jpg" />
 
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7683037506200285" crossorigin="anonymous"></script>
+    <!-- LLMs & AI Agent Discovery -->
+    <link rel="alternate" type="text/markdown" href="/llms.txt" title="llms.txt" />
+
+    <!-- Google Fonts Non-Render-Blocking Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+    </noscript>
+
+    <!-- Google AdSense (Deferred to prevent blocking initial paint/FCP) -->
+    <script>
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var adScript = document.createElement('script');
+          adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7683037506200285";
+          adScript.async = true;
+          adScript.crossOrigin = "anonymous";
+          document.head.appendChild(adScript);
+        }, 100);
+      });
+    </script>
 
     <!-- JSON-LD Structured Data (Schema.org) for Rich Snippets -->
     <script type="application/ld+json">

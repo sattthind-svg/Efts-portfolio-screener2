@@ -48,6 +48,8 @@ import AICopilot from './components/AICopilot';
 import AdPlacement from './components/AdPlacement';
 import ETFScreener from './components/ETFScreener';
 import { BlogView } from './components/BlogView';
+import { VisitorFeedback } from './components/VisitorFeedback';
+import { MessageSquare, Lightbulb } from 'lucide-react';
 import { SCREENER_ETFS } from './screenerData';
 import { BLOG_POSTS } from './blogData';
 
@@ -93,6 +95,7 @@ export default function App() {
 
   // Add Custom ETF Modal
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState<boolean>(false);
   const [newTicker, setNewTicker] = useState<string>('');
   const [newName, setNewName] = useState<string>('');
   const [newDomicile, setNewDomicile] = useState<'Australia' | 'US'>('Australia');
@@ -1202,6 +1205,15 @@ export default function App() {
                   inactive: 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-rose-600 dark:bg-[#1E293B] dark:border-[#334155] dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-rose-400 shadow-3xs',
                   iconActive: 'text-white',
                   iconInactive: 'text-rose-600 dark:text-rose-400'
+                },
+                {
+                  id: 'feedback',
+                  label: 'Visitor Suggestions & Ideas',
+                  icon: Lightbulb,
+                  active: 'bg-gradient-to-r from-amber-500 via-orange-500 to-indigo-600 text-white shadow-md shadow-amber-500/20 scale-[1.03] ring-1 ring-amber-500/10',
+                  inactive: 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-amber-600 dark:bg-[#1E293B] dark:border-[#334155] dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-amber-400 shadow-3xs',
+                  iconActive: 'text-white',
+                  iconInactive: 'text-amber-500 dark:text-amber-400'
                 }
               ].map(tab => {
                 const IconComponent = tab.icon;
@@ -1595,6 +1607,34 @@ export default function App() {
             onSelectPost={setSelectedBlogPostId}
           />
         )}
+
+        {activeTab === 'feedback' && (
+          <VisitorFeedback standaloneColumn={true} />
+        )}
+
+        {/* Floating Feedback Trigger Button for Instant Visitor Suggestions */}
+        <div className="fixed bottom-6 right-6 z-40">
+          <button
+            onClick={() => setShowFeedbackModal(true)}
+            className="group flex items-center gap-2.5 bg-slate-900 hover:bg-indigo-950 text-white p-3 sm:px-4 sm:py-3 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-200 border border-indigo-500/30 cursor-pointer"
+            title="Submit Feedback & Suggest Features"
+          >
+            <div className="w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-300 flex items-center justify-center border border-indigo-400/30 group-hover:bg-indigo-500 group-hover:text-white transition">
+              <Lightbulb className="w-4 h-4 text-amber-400 group-hover:text-white" />
+            </div>
+            <div className="text-left hidden sm:block pr-1">
+              <span className="block text-xs font-black text-white leading-none">Suggestions</span>
+              <span className="block text-[10px] text-indigo-300 font-semibold mt-0.5">Leave Feedback</span>
+            </div>
+          </button>
+        </div>
+
+        {/* Feedback Modal */}
+        <VisitorFeedback
+          isOpen={showFeedbackModal}
+          onClose={() => setShowFeedbackModal(false)}
+          standaloneColumn={false}
+        />
 
         {/* Dynamic Ad Placement Monetization Hub */}
         <div className="mt-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
